@@ -2,7 +2,8 @@
 
 int main() {
     int val = 123456789;
-    printf("result: %d", count_ones(val));
+    int count_1 = count_ones(val);
+    printf("result: %d\n", count_1);
     printf("result: %d", count_zeros(val));
 }
 
@@ -30,8 +31,18 @@ int count_zeros(int val) {
     }
     return count;
 }
-void print_bits( int val ){//a qual imprime como caracteres os valores dos bits de todos os elementos fo valor inteiro val, passado como parâmetro.
 
+//Função que escreve o valor em binario introduzido em val
+void print_bits(int val) {
+    int i;
+    for (i = sizeof(int) * 8 - 1; i >= 0; i--) {
+        if (val & (1 << i)) {
+            printf("1");
+        } else {
+            printf("0");
+        }
+    }
+    printf("\n");
 }
 char most_frequent_symbol( char *file_name ){// a qual retorna o símbolo mais frequente do ficheiro
 //de texto file_name. A função imprime na consola o número de vezes que esse símbolo ocorre no ficheiro.
