@@ -1,3 +1,12 @@
+#include <stdio.h>
+
+int main() {
+    int val = 123456789;
+    printf("result: %d", count_ones(val));
+    printf("result: %d", count_zeros(val));
+}
+
+
 //Função que retorna o numero de bits a 1 no valor inteiro val
 int count_ones(int val) {
     int count = 0;
