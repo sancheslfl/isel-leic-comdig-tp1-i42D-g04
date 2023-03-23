@@ -1,6 +1,25 @@
-int count_ones( int val ){// retornam o número de bits a 1 e a 0 no valor inteiro val, passado como parâmetro.
+//Função que retorna o numero de bits a 1 no valor inteiro val
+int count_ones(int val) {
+    int count = 0;
+    while (val != 0) {
+        if (val & 1) {
+            count++;
+        }
+        val >>= 1;
+    }
+    return count;
 }
-int count_zeros( int val ){// retornam o número de bits a 1 e a 0 no valor inteiro val, passado como parâmetro.
+
+//Função que retorna o numero de bits a 0 no valor inteiro val
+int count_zeros(int val) {
+    int count = 0;
+    while (val != 0) {
+        if ((val & 1) == 0) {
+            count++;
+        }
+        val >>= 1;
+    }
+    return count;
 }
 void print_bits( int val ){//a qual imprime como caracteres os valores dos bits de todos os elementos fo valor inteiro val, passado como parâmetro.
 
