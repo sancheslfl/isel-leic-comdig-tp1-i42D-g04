@@ -1,26 +1,9 @@
+
+
 #include <stdio.h>
 #include <stdlib.h>
 
 #define MAX_CHAR 256
-
-int main() {
-    int val = 123456789;
-    int count_1 = count_ones(val);
-    int count_0 = count_zeros(val);
-    char file_name = "ListaPalavrasEN.txt";
-    char file_namePT = "ListaPalvrasPT.txt";
-    char output_file_namePT = "Negative_WordListPT";
-    char image = "..//lena.bmp";
-    printf("val: %d\n", val);
-    printf("count_ones result: %d\n", count_1);//should show count_ones result: 16
-    printf("count_zeros result: %d\n", count_0);//should show count_zeros result: 11
-    printf("print_bits result: ");
-    print_bits(val);//should show print_bits result: 00000111010110111100110100010101
-    //char most_frequent_1 = most_frequent_symbol(file_name);
-    //printf("most frequent symbol: %d", most_frequent_1);
-    negative_file(image,output_file_namePT);
-}
-
 
 //Função que retorna o numero de bits a 1 no valor inteiro val
 int count_ones(int val) {
@@ -60,7 +43,7 @@ void print_bits(int val) {
 }
 
 // Função que retorna o simbolo mais frequente em um ficheiro representado por file_name
-char most_frequent_symbol( char *file_name) {
+char most_frequent_symbol(char* file_name) {
     FILE *file_ptr;
     int freq[MAX_CHAR] = {0};
     char ch;
@@ -118,4 +101,22 @@ void negative_file(char *input_file_name, char *output_file_name) {
 
     fclose(input_file);
     fclose(output_file);
+}
+
+int main() {
+    // int val = 123456789;
+    // int count_1 = count_ones(val);
+    // int count_0 = count_zeros(val);
+    char* file_name = "ListaPalavrasPT.txt";
+    // char file_namePT = "ListaPalvrasPT.txt";
+    char* output_file_namePT = "Negative_WordListPT";
+    // char image = "lena.bmp";
+    // printf("val: %d\n", val);
+    // printf("count_ones result: %d\n", count_1);//should show count_ones result: 16
+    // printf("count_zeros result: %d\n", count_0);//should show count_zeros result: 11
+    // printf("print_bits result: ");
+    // print_bits(val);//should show print_bits result: 00000111010110111100110100010101
+    char most_frequent_1 = most_frequent_symbol(file_name);
+    printf("most frequent symbol: %c", most_frequent_1);
+    negative_file(file_name,output_file_namePT);
 }
