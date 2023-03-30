@@ -22,6 +22,32 @@ def mdc(a,b):
     else:
         print("Os números não podem ser nulos") 
 
+    def freq_symbols(file_path):
+        with open(file_path, 'r') as file:
+            # Lê todo o conteúdo do arquivo
+            content = file.read()
+
+            # Conta o número de ocorrências de cada símbolo
+            counter = {}
+            for c in content:
+                if c in counter:
+                    counter[c] += 1
+                else:
+                    counter[c] = 1
+            # Guarda o simbulo mais e menos frequente para depois dar return 
+            most_frequent_symbol = max(counter, key=counter.get)
+            less_frequent_symbol = min(counter, key=counter.get)
+
+            most_frequent = counter[most_frequent_symbol]
+            less_frequent = counter[less_frequent_symbol]
+
+            # Dá return dos simbolos
+            print("Símbolo mais frequente: {} ({} ocorrências)".format(most_frequent_symbol, most_frequent))
+            print("Símbolo mais frequente: {} ({} ocorrências)".format(less_frequent_symbol, less_frequent))
+
+            return (most_frequent_symbol, most_frequent, less_frequent_symbol, less_frequent)
+
+
 
 
 
