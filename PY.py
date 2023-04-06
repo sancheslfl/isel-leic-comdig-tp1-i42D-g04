@@ -1,3 +1,6 @@
+import math
+import matplotlib.pyplot as plt
+
 def progressao_geometrica(N, u, r):
     termos = [u] # começa com o primeiro termo u
     for i in range(1, N):
@@ -34,6 +37,7 @@ def freq_symbols(file_path):
                     counter[c] += 1
                 else:
                     counter[c] = 1
+        
             # Guarda o simbulo mais e menos frequente para depois dar return 
             most_frequent_symbol = max(counter, key=counter.get)
             less_frequent_symbol = min(counter, key=counter.get)
@@ -48,8 +52,49 @@ def freq_symbols(file_path):
             return (most_frequent_symbol, most_frequent, less_frequent_symbol, less_frequent)
 
 # Testes das Funções
-freq_symbols('ListaPalavrasEN.txt')
-freq_symbols('ListaPalavrasPT.txt')
+#freq_symbols('ListaPalavrasEN.txt')
+#freq_symbols('ListaPalavrasPT.txt')
+
+
+#Função que apresenta o histograma de um ficheiro, o valor da informação própria de cada símbolo e a entropia do ficheiro
+
+def histograma(file_name):
+    with open(file_name, 'r') as file:
+        data = file.read()
+
+# Conta o número de ocorrências de cada símbolo
+    histogram = {}
+    for symbol in data:
+        if symbol in histogram:
+            histogram[symbol] += 1
+        else:
+            histogram[symbol] = 1
+               
+# Valor da informação própria de cada simbolo
+    info = {}
+    for symbol, freq in histogram.items():
+        info[symbol] = -log2(freq/len(data))
+
+# Valor da entropia do ficheiro
+    for symbol, freq in histogram.items():
+        entropia = sum(freq/len(data)*info[symbol]) 
+
+    plt.hist(data)    
+    plt.show() 
+
+    print(f'Informação própria de cada símbolo: {info[symbol]}')
+    print(f'Entropia do arquivo: {entropia}')
+
+histograma('ListaPalavrasEN.tx')
+histograma('ListaPalavrasPt.txt')
+
+
+    
+        
+        
+
+
+
 
 
 
