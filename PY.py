@@ -59,7 +59,7 @@ def freq_symbols(file_path):
 #Função que apresenta o histograma de um ficheiro, o valor da informação própria de cada símbolo e a entropia do ficheiro
 
 def histograma(file_name):
-    entropia = None
+    entropia = 0.0000
     symbol = None
     with open(file_name, 'r') as file:
         data = file.read()
@@ -71,21 +71,23 @@ def histograma(file_name):
             histogram[symbol] += 1
         else:
             histogram[symbol] = 1
-               
+    
 # Valor da informação própria de cada simbolo
     info = {}
     for symbol, freq in histogram.items():
-        info[symbol] = math.log((freq/len(data)),2)
-
+        info[symbol] = -(math.log((freq/len(data)),2))
+        print(f'Informação própria de cada símbolo: {info[symbol]}')
+        
 # Valor da entropia do ficheiro
     for symbol, freq in histogram.items():
-        entropia = sum(freq/len(data)*info[symbol]) 
+        prob = (freq/len(data))
+        i = prob*info[symbol]
+        entropia += i
 
-    plt.hist(data)    
+    plt.bar(histogram.keys(),histogram.values())    
     plt.show() 
 
-    print(f'Informação própria de cada símbolo: {info[symbol]}')
     print(f"Entropia do arquivo: {entropia}")
 
-histograma('ListaPalavrasEN.tx')
-histograma('ListaPalavrasPt.txt')   
+#histograma('ListaPalavrasEN.tx')
+#histograma('ListaPalavrasPt.txt')   
