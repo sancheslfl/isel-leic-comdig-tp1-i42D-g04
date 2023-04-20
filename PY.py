@@ -88,19 +88,4 @@ def histograma(file_name):
     print(f"Entropia do arquivo: {entropia}")
 
 histograma('ListaPalavrasEN.tx')
-histograma('ListaPalavrasPt.txt')
-
-
-    
-        
-        
-
-
-
-
-
-
-
-    
-
-   
+histograma('ListaPalavrasPt.txt')   
