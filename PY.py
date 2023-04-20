@@ -39,8 +39,8 @@ def freq_symbols(file_path):
                     counter[c] = 1
         
             # Guarda o simbulo mais e menos frequente para depois dar return 
-            most_frequent_symbol = max(counter, key=counter.get)
-            less_frequent_symbol = min(counter, key=counter.get)
+            most_frequent_symbol = max(counter)
+            less_frequent_symbol = min(counter)
 
             most_frequent = counter[most_frequent_symbol]
             less_frequent = counter[less_frequent_symbol]
@@ -59,6 +59,8 @@ def freq_symbols(file_path):
 #Função que apresenta o histograma de um ficheiro, o valor da informação própria de cada símbolo e a entropia do ficheiro
 
 def histograma(file_name):
+    entropia = None
+    symbol = None
     with open(file_name, 'r') as file:
         data = file.read()
 
@@ -73,7 +75,7 @@ def histograma(file_name):
 # Valor da informação própria de cada simbolo
     info = {}
     for symbol, freq in histogram.items():
-        info[symbol] = -log2(freq/len(data))
+        info[symbol] = math.log((freq/len(data)),2)
 
 # Valor da entropia do ficheiro
     for symbol, freq in histogram.items():
@@ -83,7 +85,7 @@ def histograma(file_name):
     plt.show() 
 
     print(f'Informação própria de cada símbolo: {info[symbol]}')
-    print(f'Entropia do arquivo: {entropia}')
+    print(f"Entropia do arquivo: {entropia}")
 
 histograma('ListaPalavrasEN.tx')
 histograma('ListaPalavrasPt.txt')
