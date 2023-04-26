@@ -28,7 +28,7 @@ print(f"Entropia real: {entropia:.3f}")
 print(f"Entropia estimada: {entropia_estimada:.3f}")
 
 M = 6 # Alfabeto de 6 símbolos
-p = [0.30, 0.25, 0.20, 0.10, 0.10, 0.05] # FMP uniforme # FMP uniforme
+p = [0.30, 0.35, 0.30, 0.05] # FMP uniforme # FMP uniforme
 N = 500 # Sequência de 500 símbolos
 simbolos = gerar_simbolos(N, p)
 entropia = calcular_entropia(p)
