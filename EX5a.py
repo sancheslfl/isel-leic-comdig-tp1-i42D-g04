@@ -1,8 +1,18 @@
 import numpy as np
 
-def matriz(string,lines,collums):
-    array = list(string)
-    list = np.arange(array).reshape(lines,collums)
-    print(list)
+def output():
+    str = "Exemplodetransmissaointerleaving"
+    arr = list(str)
+    print(arr)
+    collums = 4
+    lines = 8
+    mz = matriz(arr,lines,collums)
+    #interleaving= []
+    #for i in range(0,collums):
+     #   interleaving = np.array([mz[:,i]])
+     #   print(interleaving)
 
-matriz("Exemplodetransmissaointerleaving",8,4)
+def matriz(arr,lines,collums):
+    list = np.array(arr).reshape(lines,collums)
+    print(list)
+    return list
