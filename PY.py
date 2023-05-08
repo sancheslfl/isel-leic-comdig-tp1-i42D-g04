@@ -1,5 +1,6 @@
 import math
 import matplotlib.pyplot as plt
+from PIL import Image
 
 def progressao_geometrica(N, u, r):
     termos = [u] # começa com o primeiro termo u
@@ -61,8 +62,12 @@ def freq_symbols(file_path):
 def histograma(file_name):
     entropia = 0.0000
     symbol = None
-    with open(file_name, 'r') as file:
-        data = file.read()
+    if file_name == "lena.bmp":
+        bmp_image = Image.open(file_name)
+        data = list(bmp_image.getdata())
+    else:
+        with open(file_name, 'r') as file:
+            data = file.read()
 
 # Conta o número de ocorrências de cada símbolo
     histogram = {}
