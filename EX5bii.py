@@ -27,32 +27,35 @@ def bsc(input_bits, ber):
 
 # Definir a Função de-interleaving
 def deinterleaver(input_bits, rows, cols):
-    input_array = np.array(input_bits)
-    input_matrix = input_array.reshape(rows, cols, order='F')
-    output_matrix = np.zeros((rows, cols))
-    for i in range(rows):
-        for j in range(cols):
-            output_matrix[(i + j) % rows][j] = input_matrix[i][j]
-    output_array = output_matrix.flatten(order='F')
-    return list(output_array)
+    input_array = list(input_bits)
+    input_array = np.array(input_array)
+    input_matrix = input_array.reshape(rows, cols)
+    output_array = ''
+    for i in range(0,cols):
+        for j in range(0,rows):
+            output_array += input_matrix[j,i]
+    output_str = ''.join(map(str, output_array))
+    return output_str
 
 # Definir a Função de conversão simbolos em binaria
 def simconvbin(sim):
     simbolos = sim
-    binary_str = ''.join([bin(ord(char))[2:] for char in simbolos])
+    binary_str = ''.join(format(ord(i), '08b') for i in simbolos)
     return binary_str
 
 # Definir a Função de conversão binaria em simbolos
 def binconvsim(bits):
-    #str_binaria = ''.join(bits)
-    simbolos = ''.join([chr(int(bits[i:i+8], 2)) for i in range(0, len(bits), 8)])
-    return simbolos
+    str_binaria = ''.join(map(str, bits))
+    char_str = ""
+    for i in range(0, len(str_binaria), 8):
+        char_str += chr(int(str_binaria[i:i+8], 2))
+    return char_str
 
 # Teste 1
 # Definir as variaveis para o Teste
-str = "ExemploDeTransmissaoInterleaving"
-print("String:", str)
-arr = list(str)
+string = "ExemploDeTransmissaoInterleaving"
+print("String:", string)
+arr = list(string)
 ber = 0.1
 rows = 8
 cols = 4
@@ -73,9 +76,9 @@ print("de-interleaving:", output)
 # Ponto B - saida da conversão binario-simbolo
     
 num_errors = 0
-for i in range(len(converter_output_A)):
-    if converter_output_A[i] != converter_output_B[i]:
+for i in range(len(A)):
+    if list(A)[i] != list(converter_output_B)[i]:
         num_errors += 1
 
 print("Número de bytes errados:", num_errors)
-print("BER:", num_errors / len(converter_output_A))
+print("BER:", num_errors / len(A))
