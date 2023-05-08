@@ -1,14 +1,11 @@
 import random
 import numpy as np
-import os
 
-dirpath = os.path.dirname(__file__)
-file= (dirpath+"/TestFilesCD/alice29.txt")
-outputfile = (dirpath+"/TestFilesCD/BOB.txt")
-
+# Definir a Função de interleaving
 def matriz(arr,lines,collums):
-    list = np.array(arr).reshape(lines,collums)
-    return list
+    list = np.array(arr)
+    array = list.reshape(lines,collums)
+    return array
 
 def interleaving(matrizs,lines,collums):
     output = ''
@@ -18,6 +15,7 @@ def interleaving(matrizs,lines,collums):
             output += mz[j,i]
     return output
 
+# Definir a Função BSC
 def bsc(input_bits, ber):
     output_bits = []
     for bit in input_bits:
@@ -27,6 +25,7 @@ def bsc(input_bits, ber):
             output_bits.append(bit)
     return output_bits
 
+# Definir a Função de-interleaving
 def deinterleaver(input_bits, rows, cols):
     input_array = np.array(input_bits)
     input_matrix = input_array.reshape(rows, cols, order='F')
@@ -37,51 +36,46 @@ def deinterleaver(input_bits, rows, cols):
     output_array = output_matrix.flatten(order='F')
     return list(output_array)
 
-# Ler o arquivo de entrada (ponto A)
-with open(file, "rb") as f:
-    input_data = f.read()
+# Definir a Função de conversão simbolos em binaria
+def simconvbin(sim):
+    simbolos = sim
+    binary_str = ''.join([bin(ord(char))[2:] for char in simbolos])
+    return binary_str
 
-# Converter os dados para uma lista de bits
-input_bits = []
-for byte in input_data:
-    for i in range(8):
-        input_bits.append((byte >> i) & 1)
+# Definir a Função de conversão binaria em simbolos
+def binconvsim(bits):
+    #str_binaria = ''.join(bits)
+    simbolos = ''.join([chr(int(bits[i:i+8], 2)) for i in range(0, len(bits), 8)])
+    return simbolos
 
-# Definir a taxa de erro e a dimensão da matriz de interleaving
+# Teste 1
+# Definir as variaveis para o Teste
+str = "ExemploDeTransmissaoInterleaving"
+print("String:", str)
+arr = list(str)
 ber = 0.1
-rows = int(100000.0)
-cols = int((len(input_bits) / rows) + 1)
-print(cols)
-# Embaralhar os dados com a matriz de interleaving
-interleaved_bits = interleaving(input_bits, rows, cols)
+rows = 8
+cols = 4
+A = interleaving(arr,rows,cols)
+print("NºLinhas: {} e NºColunas: {}".format(rows, cols))
+print("Interleaving:", A)
+converter_output_A = simconvbin(A)
+print("conversor simbolo-binario:", converter_output_A)
+BSC = bsc(converter_output_A ,ber)
+print("BSC:", BSC)
+converter_output_B = binconvsim(BSC)
+print("conversor binario-simbolo:", converter_output_B)
+output = deinterleaver(converter_output_B,rows,cols)
+print("de-interleaving:", output)
 
-# Transmitir os dados pelo canal BSC
-output_bits = bsc(interleaved_bits, ber)
-
-# Desembaralhar os dados com a matriz de interleaving
-deinterleaved_bits = deinterleaver(output_bits, rows, cols)
-
-# Converter a lista de bits de saída de volta para bytes
-output_data = bytearray()
-for i in range(0, len(deinterleaved_bits), 8):
-    byte = 0
-    for j in range(8):
-        byte |= deinterleaved_bits[i+j] << j
-    output_data.append(byte)
-
-# Salvar o arquivo de saída (ponto B)
-with open(outputfile, "wb") as f:
-    f.write(output_data)
-
-# Comparar os dois arquivos
-with open(file, "rb") as f1, open(outputfile, "rb") as f2:
-    input_data = f1.read()
-    output_data = f2.read()
-
+# Comparar os pontos A e B
+# Ponto A - saida da função de interleaving
+# Ponto B - saida da conversão binario-simbolo
+    
 num_errors = 0
-for i in range(len(input_data)):
-    if input_data[i] != output_data[i]:
+for i in range(len(converter_output_A)):
+    if converter_output_A[i] != converter_output_B[i]:
         num_errors += 1
 
 print("Número de bytes errados:", num_errors)
-print("BER:", num_errors / len(input_data))
+print("BER:", num_errors / len(converter_output_A))
